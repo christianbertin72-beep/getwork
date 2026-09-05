@@ -1,147 +1,155 @@
 import React from 'react';
-import { Users, FileText, ShieldCheck, MessageSquare, Plus } from 'lucide-react';
+import { Users, ShieldCheck, MessageSquare, ArrowRight, Zap, Sparkles } from 'lucide-react';
 
 interface FeaturesSectionProps {
   onCardClick?: (featureTitle: string) => void;
 }
 
 export const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onCardClick }) => {
-  const features = [
-    {
-      id: 'talent',
-      title: 'Find Top Talent',
-      description: 'Access a global pool of verified freelancers across various skills and industries.',
-      icon: (
-        <div className="w-10 h-10 rounded-xl bg-transparent flex items-center justify-center text-[#34d77f] flex-none">
-          <Users className="w-7 h-7 stroke-[1.8]" />
-        </div>
-      ),
-    },
-    {
-      id: 'management',
-      title: 'Smart Project Management',
-      description: 'Collaborate, track progress, and manage tasks all in one seamless workspace.',
-      icon: (
-        <div className="w-10 h-10 rounded-xl bg-transparent flex items-center justify-center text-[#34d77f] flex-none relative">
-          <div className="w-7 h-7 border-2 border-[#34d77f] rounded-md flex items-center justify-center relative">
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <div className="absolute -bottom-1 -right-1 w-2 h-0.5 bg-[#34d77f]" />
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'payments',
-      title: 'Secure Payments',
-      description: 'Pay safely with escrow protection and multiple secure payment options.',
-      icon: (
-        <div className="w-10 h-10 rounded-xl bg-transparent flex items-center justify-center text-[#34d77f] flex-none">
-          <ShieldCheck className="w-7 h-7 stroke-[1.8]" />
-        </div>
-      ),
-    },
-    {
-      id: 'communication',
-      title: 'Easy Communication',
-      description: 'Chat, share files, and stay updated with real-time notifications.',
-      icon: (
-        <div className="w-10 h-10 rounded-xl bg-transparent flex items-center justify-center text-[#34d77f] flex-none">
-          <MessageSquare className="w-7 h-7 stroke-[1.8]" />
-        </div>
-      ),
-    },
-  ];
-
   return (
-    <section id="features" className="relative w-full py-20 px-6 md:px-12 lg:px-16 overflow-hidden bg-[#060709]">
-      {/* Laser lines at bottom left and bottom right corners as in the screenshot */}
-      <svg
-        className="absolute bottom-0 left-0 w-80 h-64 pointer-events-none opacity-80"
-        viewBox="0 0 320 250"
-        fill="none"
-      >
-        <line
-          x1="-50"
-          y1="250"
-          x2="280"
-          y2="80"
-          stroke="#34d77f"
-          strokeWidth="1.6"
-          strokeOpacity="0.8"
-          className="laser-beam"
-        />
-        <line
-          x1="-80"
-          y1="280"
-          x2="190"
-          y2="140"
-          stroke="#22c55e"
-          strokeWidth="1.2"
-          strokeOpacity="0.5"
-        />
-      </svg>
-
-      <svg
-        className="absolute bottom-0 right-0 w-80 h-64 pointer-events-none opacity-80"
-        viewBox="0 0 320 250"
-        fill="none"
-      >
-        <line
-          x1="370"
-          y1="250"
-          x2="40"
-          y2="80"
-          stroke="#34d77f"
-          strokeWidth="1.6"
-          strokeOpacity="0.8"
-          className="laser-beam"
-        />
-        <line
-          x1="400"
-          y1="280"
-          x2="130"
-          y2="140"
-          stroke="#22c55e"
-          strokeWidth="1.2"
-          strokeOpacity="0.5"
-        />
-      </svg>
-
-      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
-        {/* Eyebrow Tag */}
-        <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0c2214] border border-[#1b4329] text-[11px] font-bold tracking-wider text-[#34d77f] uppercase mb-5">
-          POWERFUL FEATURES
+    <section id="features" className="relative w-full py-24 md:py-32 px-5 sm:px-8 bg-[#080808]">
+      <div className="max-w-[1199px] mx-auto flex flex-col items-start text-left">
+        {/* Charcoal Pill Eyebrow */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-white/[0.08] text-[13px] font-medium text-[#999999] mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+          <span className="text-white">Platform capabilities</span>
         </div>
 
-        {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-          Everything you need in one platform
+        {/* Poster Heading */}
+        <h2 className="text-white text-[36px] sm:text-[52px] lg:text-[60px] font-medium leading-[0.96] tracking-[-2.5px] sm:tracking-[-3.1px] max-w-2xl">
+          Everything you need on one canvas.
         </h2>
 
         {/* Subtitle */}
-        <p className="mt-3.5 text-neutral-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          From finding the right talent to delivering successful projects, MINDS has you covered.
+        <p className="mt-5 text-[#999999] text-[15px] sm:text-[16px] leading-[1.4] tracking-[-0.15px] max-w-xl">
+          From recruiting pre-vetted specialists to escrow-backed project completions, MINDS keeps your remote workflow synchronized and frictionless.
         </p>
 
-        {/* 4 Feature Cards Grid */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 w-full text-left">
-          {features.map((feature) => (
-            <div
-              key={feature.id}
-              onClick={() => onCardClick?.(feature.title)}
-              className="group bg-[#0f1114] border border-white/[0.08] hover:border-[#34d77f]/40 hover:bg-[#14171b] rounded-2xl p-6 transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#34d77f]/5 hover:-translate-y-0.5 flex flex-col justify-start"
-            >
-              <div className="mb-4 text-[#34d77f] group-hover:scale-110 transition-transform origin-left">
-                {feature.icon}
+        {/* Feature Layout with Signature Gradient Spotlight Card */}
+        <div className="mt-14 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* SIGNATURE FRAMER GRADIENT SPOTLIGHT CARD (Violet Atmosphere Tile) */}
+          <div
+            onClick={() => onCardClick?.('Smart Project Workspace')}
+            className="lg:col-span-7 gradient-spotlight-violet p-7 sm:p-9 relative overflow-hidden flex flex-col justify-between cursor-pointer group shadow-2xl transition-transform duration-200 hover:scale-[0.995]"
+          >
+            {/* Ambient interior lighting */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Card Header */}
+            <div className="relative z-10 flex items-start justify-between">
+              <div className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center text-white border border-white/20">
+                <Zap className="w-5 h-5" />
               </div>
-              <h3 className="text-[15px] font-semibold text-white tracking-tight group-hover:text-[#34d77f] transition-colors">
-                {feature.title}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-[12px] font-medium tracking-[-0.12px] backdrop-blur-md">
+                <Sparkles className="w-3 h-3" />
+                Featured
+              </span>
+            </div>
+
+            {/* Poster statement within Spotlight Card */}
+            <div className="relative z-10 my-10 max-w-md">
+              <h3 className="text-[28px] sm:text-[34px] font-medium text-white tracking-[-1.4px] leading-[1.05]">
+                Smart Project Workspace. Synchronized milestones.
               </h3>
-              <p className="mt-2 text-xs sm:text-[13px] text-neutral-400 leading-relaxed">
-                {feature.description}
+              <p className="mt-3 text-white/80 text-[15px] leading-[1.35] tracking-[-0.14px]">
+                Collaborate directly, share build artifacts, track deliverables, and manage approval checkpoints in one integrated interface.
               </p>
             </div>
-          ))}
+
+            {/* Interactive preview pill */}
+            <div className="relative z-10 pt-4 flex items-center justify-between border-t border-white/20">
+              <span className="text-[13px] font-medium text-white tracking-[-0.13px]">Explore collaborative workspace</span>
+              <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Surface-1 Charcoal Feature Cards */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
+            {/* Feature 2: Top Talent */}
+            <div
+              onClick={() => onCardClick?.('Find Top Talent')}
+              className="bg-[#141414] border border-white/[0.08] hover:border-white/20 hover:bg-[#1e1e1e] rounded-[20px] p-7 transition-all cursor-pointer flex-1 flex flex-col justify-between group"
+            >
+              <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white mb-6">
+                <Users className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-[20px] font-medium text-white tracking-[-0.7px]">
+                  Vetted Global Talent
+                </h3>
+                <p className="mt-2 text-[14px] text-[#999999] leading-[1.35] tracking-[-0.14px]">
+                  Direct access to senior developers, designers, and creative specialists pre-screened for excellence.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center gap-1.5 text-[13px] font-medium text-white group-hover:text-[#0099ff] transition-colors">
+                <span>View talent directory</span>
+                <ArrowRight className="w-3 h-3" />
+              </div>
+            </div>
+
+            {/* Feature 3: Escrow Payments */}
+            <div
+              onClick={() => onCardClick?.('Secure Payments')}
+              className="bg-[#141414] border border-white/[0.08] hover:border-white/20 hover:bg-[#1e1e1e] rounded-[20px] p-7 transition-all cursor-pointer flex-1 flex flex-col justify-between group"
+            >
+              <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white mb-6">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-[20px] font-medium text-white tracking-[-0.7px]">
+                  Escrow-Protected Payments
+                </h3>
+                <p className="mt-2 text-[14px] text-[#999999] leading-[1.35] tracking-[-0.14px]">
+                  Funds are secured upon milestone initialization and only disbursed once deliverables meet your standards.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center gap-1.5 text-[13px] font-medium text-white group-hover:text-[#0099ff] transition-colors">
+                <span>Learn about escrow</span>
+                <ArrowRight className="w-3 h-3" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Secondary Row of Framer Surface-1 Cards */}
+        <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Card 4: Asynchronous Communication */}
+          <div
+            onClick={() => onCardClick?.('Easy Communication')}
+            className="bg-[#141414] border border-white/[0.08] hover:border-white/20 hover:bg-[#1e1e1e] rounded-[20px] p-7 transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white mb-6">
+              <MessageSquare className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-[20px] font-medium text-white tracking-[-0.7px]">
+                Threaded Async Communication
+              </h3>
+              <p className="mt-2 text-[14px] text-[#999999] leading-[1.35] tracking-[-0.14px]">
+                Built-in revision trails, code snippets, file uploads, and contextual video memos keep your team aligned across timezones.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 5: Real-time Analytics & Transparency */}
+          <div
+            onClick={() => onCardClick?.('Project Analytics')}
+            className="bg-[#141414] border border-white/[0.08] hover:border-white/20 hover:bg-[#1e1e1e] rounded-[20px] p-7 transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white mb-6">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-[20px] font-medium text-white tracking-[-0.7px]">
+                Instant Milestone Tracking
+              </h3>
+              <p className="mt-2 text-[14px] text-[#999999] leading-[1.35] tracking-[-0.14px]">
+                Clear project velocity charts, time logs, and automated invoices generated upon milestone approval.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

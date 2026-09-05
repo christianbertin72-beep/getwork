@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   onOpenAuth?: (mode: 'login' | 'signup') => void;
@@ -28,12 +28,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
       items: [
         { title: 'Browse All Jobs', desc: 'Explore 10,000+ freelance contracts worldwide' },
         { title: 'Full-Stack Development', desc: 'React, Node, Next.js, and cloud positions' },
-        { title: 'UI/UX & Product Design', desc: 'Figma systems, mobile apps, and branding' },
+        { title: 'UI/UX & Product Design', desc: 'Design systems, mobile apps, and branding' },
         { title: 'AI & Machine Learning', desc: 'Prompt engineering, LLMs, and fine-tuning' },
       ],
     },
     { id: 'features', label: 'Features', hasDropdown: false, href: '#features' },
-    { id: 'pricing', label: 'Pricing', hasDropdown: false, href: '#pricing' },
+    { id: 'how-it-works', label: 'How it Works', hasDropdown: false, href: '#how-it-works' },
     {
       id: 'resources',
       label: 'Resources',
@@ -47,19 +47,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
   ];
 
   return (
-    <header className="relative z-50 w-full px-6 md:px-12 lg:px-16 pt-5 pb-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
+    <header className="sticky top-0 z-50 w-full bg-[#080808]/90 backdrop-blur-md border-b border-white/[0.04]">
+      <div className="max-w-[1199px] mx-auto h-14 px-5 sm:px-8 flex items-center justify-between">
+        {/* Wordmark (Pure White Ink) */}
         <a
           href="/"
-          className="flex items-center gap-0.5 text-2xl font-black tracking-wider text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f] rounded-md px-1 -ml-1 transition-opacity hover:opacity-90"
+          className="flex items-center text-[17px] font-medium tracking-[-0.6px] text-white hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0099ff]/50 rounded-md"
         >
           <span>MINDS</span>
-          <span className="text-[#34d77f] text-2xl leading-none">.</span>
         </a>
 
-        {/* Desktop Nav Items */}
-        <nav className="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-neutral-300" aria-label="Main Navigation">
+        {/* Centered Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-7 text-[14px] font-normal tracking-[-0.15px]" aria-label="Main Navigation">
           {navItems.map((item) => (
             <div
               key={item.id}
@@ -70,13 +69,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
               {item.hasDropdown ? (
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 py-1.5 hover:text-white cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f] rounded-md"
+                  className="flex items-center gap-1.5 py-1 text-[#999999] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0099ff]/50 rounded-md"
                   onClick={() => setActiveDropdown(activeDropdown === item.id ? null : item.id)}
                   aria-expanded={activeDropdown === item.id}
                 >
                   <span>{item.label}</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-200 ${
+                    className={`w-3.5 h-3.5 text-[#999999] transition-transform duration-150 ${
                       activeDropdown === item.id ? 'rotate-180 text-white' : ''
                     }`}
                   />
@@ -84,33 +83,35 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
               ) : (
                 <a
                   href={item.href}
-                  className="py-1.5 hover:text-white cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f] rounded-md"
+                  className="py-1 text-[#999999] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0099ff]/50 rounded-md"
                 >
                   {item.label}
                 </a>
               )}
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu (Surface-1 lifted card) */}
               {item.hasDropdown && activeDropdown === item.id && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-[#121417] border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                  <div className="space-y-1">
-                    {item.items?.map((sub, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => {
-                          setActiveDropdown(null);
-                          if (item.id === 'talent') onOpenHire?.();
-                        }}
-                        className="w-full text-left p-2.5 rounded-lg hover:bg-white/5 transition-colors group cursor-pointer"
-                      >
-                        <div className="text-xs font-semibold text-white group-hover:text-[#34d77f] flex items-center justify-between">
-                          <span>{sub.title}</span>
-                          <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        <p className="text-[11px] text-neutral-400 mt-0.5 leading-relaxed">{sub.desc}</p>
-                      </button>
-                    ))}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
+                  <div className="w-72 bg-[#141414] border border-white/[0.08] rounded-[15px] p-2 shadow-2xl backdrop-blur-xl">
+                    <div className="space-y-1">
+                      {item.items?.map((sub, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => {
+                            setActiveDropdown(null);
+                            if (item.id === 'talent') onOpenHire?.();
+                          }}
+                          className="w-full text-left p-2.5 rounded-[10px] hover:bg-white/[0.04] transition-colors group cursor-pointer"
+                        >
+                          <div className="text-[13.5px] font-medium text-white tracking-[-0.14px] flex items-center justify-between">
+                            <span>{sub.title}</span>
+                            <ArrowUpRight className="w-3 h-3 text-[#999999] group-hover:text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          <p className="text-[12px] text-[#999999] mt-0.5 leading-[1.3] tracking-[-0.12px]">{sub.desc}</p>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -118,38 +119,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
           ))}
         </nav>
 
-        {/* Right CTA Actions */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Right Actions: Secondary Charcoal Pill + Primary White Pill */}
+        <div className="hidden md:flex items-center gap-3">
           <button
             type="button"
             onClick={() => onOpenAuth?.('login')}
-            className="text-[13.5px] font-medium text-neutral-200 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f] rounded-md px-2 py-1"
+            className="button-secondary text-[14px] py-[8px] px-[15px] cursor-pointer"
           >
             Log in
           </button>
           <button
             type="button"
             onClick={() => onOpenAuth?.('signup')}
-            className="bg-[#7ae89d] hover:bg-[#6bd68e] active:scale-95 text-[#082213] font-semibold text-[13.5px] px-4 py-1.5 rounded-lg transition-all shadow-md shadow-[#7ae89d]/15 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f]"
+            className="button-primary text-[14px] py-[8px] px-[15px] cursor-pointer"
           >
-            Sign up
+            Get started
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-3">
+        {/* Mobile Controls */}
+        <div className="flex md:hidden items-center gap-2">
           <button
             type="button"
             onClick={() => onOpenAuth?.('signup')}
-            className="bg-[#7ae89d] text-[#082213] text-xs font-semibold px-3 py-1.5 rounded-lg"
+            className="button-primary text-[13px] py-[6px] px-[12px]"
           >
-            Sign up
+            Get started
           </button>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300 hover:text-white"
-            aria-label="Toggle Navigation Menu"
+            className="p-1.5 rounded-full bg-[#141414] border border-white/[0.08] text-[#999999] hover:text-white"
+            aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -158,15 +159,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 p-4 bg-[#111316] border border-white/10 rounded-2xl space-y-4 animate-in fade-in slide-in-from-top-2">
+        <div className="md:hidden p-5 bg-[#141414] border-b border-white/[0.08] space-y-4">
           <div className="space-y-2">
             {navItems.map((item) => (
-              <div key={item.id} className="border-b border-white/5 pb-2">
-                <div className="font-semibold text-sm text-white py-1">{item.label}</div>
+              <div key={item.id} className="border-b border-white/[0.04] pb-2">
+                <div className="font-medium text-[14px] text-white py-1">{item.label}</div>
                 {item.items && (
-                  <div className="pl-3 space-y-1.5 mt-1">
+                  <div className="pl-3 space-y-1 mt-1">
                     {item.items.map((sub, i) => (
-                      <div key={i} className="text-xs text-neutral-400 hover:text-[#34d77f] py-1 cursor-pointer">
+                      <div
+                        key={i}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          if (item.id === 'talent') onOpenHire?.();
+                        }}
+                        className="text-[13px] text-[#999999] hover:text-white py-1 cursor-pointer"
+                      >
                         {sub.title}
                       </div>
                     ))}
@@ -176,14 +184,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
             ))}
           </div>
 
-          <div className="pt-2 flex flex-col gap-2">
+          <div className="pt-2 flex flex-col gap-2.5">
             <button
               type="button"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenAuth?.('login');
               }}
-              className="w-full py-2.5 text-center text-sm font-medium text-white border border-white/15 rounded-xl"
+              className="button-secondary w-full"
             >
               Log in
             </button>
@@ -193,9 +201,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenHire }) => {
                 setMobileMenuOpen(false);
                 onOpenAuth?.('signup');
               }}
-              className="w-full py-2.5 text-center text-sm font-semibold bg-[#7ae89d] text-[#082213] rounded-xl"
+              className="button-primary w-full"
             >
-              Sign up
+              Get started
             </button>
           </div>
         </div>

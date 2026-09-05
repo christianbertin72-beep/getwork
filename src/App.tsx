@@ -48,18 +48,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060709] text-white flex flex-col selection:bg-[#34d77f] selection:text-black font-sans relative overflow-x-hidden">
-      {/* Background ambient lighting effects */}
+    <div className="min-h-screen bg-[#080808] text-white flex flex-col selection:bg-[#0099ff]/25 selection:text-white font-sans relative overflow-x-hidden">
+      {/* Subtle atmospheric ambient glow */}
       <div
-        className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#34d77f]/[0.03] rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-0 right-0 w-[550px] h-[550px] bg-violet-600/[0.025] rounded-full blur-[150px] pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute top-[500px] left-0 w-[500px] h-[500px] bg-[#22c55e]/[0.02] rounded-full blur-[160px] pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-[1600px] right-0 w-[600px] h-[600px] bg-[#34d77f]/[0.02] rounded-full blur-[180px] pointer-events-none"
+        className="absolute top-[800px] left-0 w-[500px] h-[500px] bg-blue-600/[0.02] rounded-full blur-[160px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -68,7 +64,7 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main className="flex-1 flex flex-col">
-        {/* 1. Hero Section with 3D Laptop Mockup & Circuit Accents */}
+        {/* 1. Hero Section */}
         <Hero
           onHireClick={handleOpenHire}
           onWorkClick={handleOpenWork}
@@ -78,27 +74,23 @@ export default function App() {
         {/* 2. Trusted By Forward-Thinking Companies Strip */}
         <CompaniesStrip />
 
-        {/* 3. Powerful Features 4-Card Section */}
+        {/* 3. Features Section with Signature Atmospheric Spotlight Card */}
         <FeaturesSection onCardClick={handleFeatureClick} />
 
-        {/* 4. How It Works: 4 Simple Steps Horizontal Flow */}
+        {/* 4. How It Works: 4 Steps Horizontal Flow */}
         <HowItWorksSection onStepClick={handleStepClick} />
 
-        {/* 5. Trusted By Thousands: Testimonials Slider */}
+        {/* 5. Client Stories / Testimonials */}
         <TestimonialsSection />
 
-        {/* 6. Ready to Get Started? CTA Rocket Banner */}
+        {/* 6. Atmospheric CTA Banner */}
         <CtaBanner onHireClick={handleOpenHire} onWorkClick={handleOpenWork} />
       </main>
 
-      {/* 7. Complete Footer with Newsletter & Links */}
-      <Footer
-        onOpenHire={handleOpenHire}
-        onOpenWork={handleOpenWork}
-        onOpenAuth={handleOpenAuth}
-      />
+      {/* 7. Footer */}
+      <Footer />
 
-      {/* Interactive Action Modals */}
+      {/* 8. Interactive Modals */}
       <InteractiveModals modalState={modalState} onClose={handleCloseModal} />
     </div>
   );

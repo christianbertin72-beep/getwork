@@ -9,85 +9,83 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({ onStepClic
   const steps = [
     {
       step: 1,
-      title: '1. Post a Project',
-      description: 'Share your project details and requirements in minutes.',
-      icon: <FileText className="w-5 h-5 text-[#34d77f]" />,
+      num: '01',
+      title: 'Post a Project',
+      description: 'Define your scope, budget, and timeline. Receive tailored proposals within 24 hours.',
+      icon: <FileText className="w-5 h-5 text-white" />,
     },
     {
       step: 2,
-      title: '2. Choose a Freelancer',
-      description: 'Review proposals and hire the best freelancer for your needs.',
-      icon: <Users className="w-5 h-5 text-[#34d77f]" />,
+      num: '02',
+      title: 'Select Talent',
+      description: 'Review proven portfolios, verified client ratings, and conduct concise technical interviews.',
+      icon: <Users className="w-5 h-5 text-white" />,
     },
     {
       step: 3,
-      title: '3. Collaborate & Track',
-      description: 'Work together, track progress, and communicate in real time.',
-      icon: <TrendingUp className="w-5 h-5 text-[#34d77f]" />,
+      num: '03',
+      title: 'Collaborate & Track',
+      description: 'Manage sprints, inspect deliverables in real time, and communicate asynchronously.',
+      icon: <TrendingUp className="w-5 h-5 text-white" />,
     },
     {
       step: 4,
-      title: '4. Approve & Pay',
-      description: 'Approve the work and release payment securely.',
-      icon: <CreditCard className="w-5 h-5 text-[#34d77f]" />,
+      num: '04',
+      title: 'Approve & Release',
+      description: 'Verify finished milestones with complete confidence before releasing escrow payments.',
+      icon: <CreditCard className="w-5 h-5 text-white" />,
     },
   ];
 
   return (
-    <section id="how-it-works" className="relative w-full py-20 md:py-24 px-6 md:px-12 lg:px-16 overflow-hidden bg-[#060709]">
-      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
-        {/* Eyebrow Tag */}
-        <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0c2214] border border-[#1b4329] text-[11px] font-bold tracking-wider text-[#34d77f] uppercase mb-4">
-          HOW IT WORKS
+    <section id="how-it-works" className="relative w-full py-24 md:py-32 px-5 sm:px-8 bg-[#080808] border-t border-white/[0.04]">
+      <div className="max-w-[1199px] mx-auto flex flex-col items-start text-left">
+        {/* Eyebrow Pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-white/[0.08] text-[13px] font-medium text-[#999999] mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+          <span className="text-white">The workflow</span>
         </div>
 
         {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white tracking-tight">
-          Get your project done in 4 simple steps
+        <h2 className="text-white text-[36px] sm:text-[52px] lg:text-[60px] font-medium leading-[0.96] tracking-[-2.5px] sm:tracking-[-3.1px] max-w-2xl">
+          Four steps from brief to launch.
         </h2>
 
-        {/* 4 Steps Horizontal Flow */}
-        <div className="mt-14 w-full relative">
-          {/* Connecting Dotted Line across cards on desktop */}
-          <div
-            className="hidden lg:block absolute top-1/2 -translate-y-1/2 left-12 right-12 h-[2px] pointer-events-none z-0"
-            style={{
-              backgroundImage: 'radial-gradient(circle, rgba(52, 215, 127, 0.4) 1px, transparent 1px)',
-              backgroundSize: '12px 2px',
-            }}
-            aria-hidden="true"
-          />
+        {/* Subtitle */}
+        <p className="mt-5 text-[#999999] text-[15px] sm:text-[16px] leading-[1.4] tracking-[-0.15px] max-w-xl">
+          A transparent, predictable process designed for remote founders and high-output teams.
+        </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative z-10 text-left">
-            {steps.map((item, index) => (
-              <div
-                key={item.step}
-                onClick={() => onStepClick?.(item.step)}
-                className="group relative bg-[#090b0e] border border-white/[0.08] hover:border-[#34d77f]/40 hover:bg-[#0e1217] rounded-2xl p-5 md:p-6 transition-all duration-200 cursor-pointer shadow-lg hover:-translate-y-1 flex items-start gap-4"
-              >
-                {/* Glowing Green Circled Icon */}
-                <div className="relative flex-none">
-                  <div className="w-12 h-12 rounded-full border border-[#34d77f]/40 bg-[#0c2214] flex items-center justify-center shadow-[0_0_15px_rgba(52,215,127,0.15)] group-hover:border-[#34d77f] group-hover:shadow-[0_0_20px_rgba(52,215,127,0.3)] transition-all">
+        {/* 4 Steps Grid on Framer Surface-1 */}
+        <div className="mt-14 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {steps.map((item) => (
+            <div
+              key={item.step}
+              onClick={() => onStepClick?.(item.step)}
+              className="bg-[#141414] border border-white/[0.08] hover:border-white/20 hover:bg-[#1e1e1e] rounded-[20px] p-7 transition-all cursor-pointer flex flex-col justify-between group h-full"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white">
                     {item.icon}
                   </div>
-                  {/* Step indicator node */}
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#34d77f] text-[#060709] text-[9px] font-black flex items-center justify-center">
-                    {item.step}
-                  </span>
+                  <span className="text-[13px] font-mono text-[#999999] tracking-tight">{item.num}</span>
                 </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0 pt-0.5">
-                  <h3 className="text-base font-bold text-white tracking-tight group-hover:text-[#34d77f] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1.5 text-xs sm:text-[13px] text-neutral-400 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+                <h3 className="text-[18px] font-medium text-white tracking-[-0.6px] group-hover:text-white transition-colors">
+                  {item.title}
+                </h3>
+                <p className="mt-2.5 text-[14px] text-[#999999] leading-[1.35] tracking-[-0.14px]">
+                  {item.description}
+                </p>
               </div>
-            ))}
-          </div>
+
+              <div className="mt-8 pt-4 border-t border-white/[0.04] flex items-center justify-between text-[13px] font-medium text-white group-hover:text-[#0099ff] transition-colors">
+                <span>View details</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

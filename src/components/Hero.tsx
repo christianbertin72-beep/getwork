@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Play, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { LaptopMockup } from './LaptopMockup';
 
 interface HeroProps {
@@ -23,78 +23,75 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   return (
-    <section className="relative w-full pt-8 pb-16 md:pt-12 md:pb-20 overflow-visible">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
-          {/* ============ LEFT COLUMN: HERO COPY & ACTIONS ============ */}
-          <div className="lg:col-span-5 xl:col-span-5 z-20 flex flex-col items-start text-left">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-xs font-medium text-neutral-300 mb-6 hover:border-white/20 transition-colors shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#34d77f] shadow-[0_0_8px_#34d77f]" />
-              <span>The future of freelancing is here</span>
+    <section className="relative w-full pt-12 pb-20 md:pt-16 md:pb-24 overflow-visible bg-[#080808]">
+      <div className="max-w-[1199px] mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Column: Poster-Grade Headline & CTAs */}
+          <div className="lg:col-span-6 z-20 flex flex-col items-start text-left">
+            {/* Charcoal Pill Eyebrow */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-white/[0.08] text-[13px] font-medium text-[#999999] mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span className="text-white">The freelance network</span>
+              <span className="text-white/20">/</span>
+              <span>Global talent</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] font-extrabold text-white tracking-tight leading-[1.12]">
-              Hire the right freelancer.
-              <br />
-              Get your project
-              <br />
-              <span className="text-[#34d77f]">done—on time.</span>
+            {/* Poster Display Headline with Extreme Negative Tracking */}
+            <h1 className="text-white text-[48px] sm:text-[68px] lg:text-[76px] font-medium leading-[0.92] tracking-[-3.8px] sm:tracking-[-4.6px]">
+              Hire the right freelancer. Get your project done.
             </h1>
 
-            {/* Subtitle */}
-            <p className="mt-5 text-neutral-400 text-sm sm:text-[15px] leading-relaxed max-w-lg">
-              MINDS connects businesses with verified freelancers worldwide to simplify hiring, communication, project management, and secure payments — all in one powerful platform.
+            {/* Lead Body Paragraph */}
+            <p className="mt-6 text-[#999999] text-[15px] sm:text-[16px] leading-[1.4] tracking-[-0.15px] max-w-lg">
+              Connect with vetted freelancers worldwide to streamline hiring, communication, milestone management, and payments — all on a single dark canvas.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="mt-7 flex items-center gap-3.5 flex-wrap">
+            {/* Framer Button Pair: Primary White Pill + Secondary Charcoal Pill */}
+            <div className="mt-8 flex items-center gap-3 flex-wrap">
               <button
                 type="button"
                 onClick={onHireClick}
-                className="bg-[#34d77f] hover:bg-[#2bc471] active:scale-[0.98] text-[#051c0f] font-bold text-sm sm:text-[15px] px-6 py-3.5 rounded-xl flex items-center gap-2.5 transition-all shadow-lg shadow-[#34d77f]/20 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f]"
+                className="button-primary cursor-pointer"
               >
-                <span>Hire a Freelancer</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Hire a freelancer</span>
+                <ArrowRight className="w-3.5 h-3.5 stroke-[2]" />
               </button>
 
               <button
                 type="button"
                 onClick={scrollToHowItWorks}
-                className="bg-[#0f1114] hover:bg-neutral-800 active:scale-[0.98] text-white font-medium text-sm sm:text-[15px] border border-white/10 hover:border-white/20 px-6 py-3.5 rounded-xl flex items-center gap-2.5 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34d77f]"
+                className="button-secondary cursor-pointer"
               >
-                <Play className="w-3.5 h-3.5 fill-current text-white" />
                 <span>How it works</span>
               </button>
             </div>
 
-            {/* 4 Hero Stats Row (Matching image.png) */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-4 border-t border-white/[0.08] w-full">
+            {/* 4 Stat Items in Clean Monochromatic Layout */}
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/[0.06] w-full">
               <div>
-                <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">500K+</div>
-                <div className="text-xs text-neutral-400 mt-0.5">Freelancers</div>
+                <div className="text-[22px] font-medium text-white tracking-[-0.8px] tabular-nums">500K+</div>
+                <div className="text-[13px] text-[#999999] tracking-[-0.13px] mt-0.5">Freelancers</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">120K+</div>
-                <div className="text-xs text-neutral-400 mt-0.5">Projects completed</div>
+                <div className="text-[22px] font-medium text-white tracking-[-0.8px] tabular-nums">120K+</div>
+                <div className="text-[13px] text-[#999999] tracking-[-0.13px] mt-0.5">Projects done</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">180+</div>
-                <div className="text-xs text-neutral-400 mt-0.5">Countries</div>
+                <div className="text-[22px] font-medium text-white tracking-[-0.8px] tabular-nums">180+</div>
+                <div className="text-[13px] text-[#999999] tracking-[-0.13px] mt-0.5">Countries</div>
               </div>
               <div>
-                <div className="flex items-center gap-1">
-                  <div className="flex text-amber-400 text-xs">★★★★★</div>
-                  <span className="text-sm font-bold text-white ml-0.5">4.9/5</span>
+                <div className="text-[22px] font-medium text-white tracking-[-0.8px] tabular-nums flex items-center gap-1">
+                  <span>4.9</span>
+                  <span className="text-[14px] text-[#999999]">/ 5</span>
                 </div>
-                <div className="text-xs text-neutral-400 mt-0.5">From 20,000+ reviews</div>
+                <div className="text-[13px] text-[#999999] tracking-[-0.13px] mt-0.5">20K+ reviews</div>
               </div>
             </div>
           </div>
 
-          {/* ============ RIGHT COLUMN: 3D LAPTOP HARDWARE WITH FLANKING CATEGORY CARDS ============ */}
-          <div className="lg:col-span-7 xl:col-span-7 relative w-full flex justify-center lg:justify-end">
+          {/* Right Column: 3D Laptop Hardware & Showcase */}
+          <div className="lg:col-span-6 relative w-full flex justify-center lg:justify-end">
             <LaptopMockup
               onCategoryClick={onCategoryClick}
               onHireClick={onHireClick}
