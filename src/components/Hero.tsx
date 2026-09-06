@@ -90,8 +90,8 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           </div>
 
-          {/* Right Column: 3D Laptop Hardware & Showcase */}
-          <div className="lg:col-span-6 relative w-full flex justify-center lg:justify-end">
+          {/* Right Column: 3D Laptop Hardware & Showcase (Hidden on mobile phones) */}
+          <div className="hidden md:flex lg:col-span-6 relative w-full justify-center lg:justify-end">
             <LaptopMockup
               onCategoryClick={onCategoryClick}
               onHireClick={onHireClick}
