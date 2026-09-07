@@ -90,7 +90,7 @@ export default function App() {
       {/* 7. Footer */}
       <Footer />
 
-      {/* 8. Interactive Modals */}
+      {/* Interactive Modals */}
       <InteractiveModals modalState={modalState} onClose={handleCloseModal} />
     </div>
   );

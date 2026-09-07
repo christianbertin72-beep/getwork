@@ -217,59 +217,51 @@ body {
 /* Live screen cursor motion */
 @keyframes naturalCursor {
   0% {
-    transform: translate(320px, 140px);
+    transform: translate(280px, 140px);
     opacity: 1;
   }
-  14% {
+  16% {
     transform: translate(215px, 14px);
     opacity: 1;
   }
-  18% {
+  20% {
     transform: translate(215px, 14px) scale(0.92);
     opacity: 1;
   }
-  22% {
+  24% {
     transform: translate(215px, 14px) scale(1);
     opacity: 1;
   }
-  36% {
-    transform: translate(200px, 112px);
+  38% {
+    transform: translate(175px, 112px);
     opacity: 1;
   }
-  42% {
-    transform: translate(200px, 112px) scale(0.85);
+  43% {
+    transform: translate(175px, 112px) scale(0.85);
     opacity: 1;
   }
-  48% {
-    transform: translate(200px, 112px) scale(1);
+  49% {
+    transform: translate(175px, 112px) scale(1);
     opacity: 1;
   }
-  62% {
-    transform: translate(195px, 205px);
+  64% {
+    transform: translate(120px, 185px);
     opacity: 1;
   }
-  68% {
-    transform: translate(195px, 205px) scale(0.88);
+  70% {
+    transform: translate(120px, 185px) scale(0.9);
     opacity: 1;
   }
-  74% {
-    transform: translate(195px, 205px) scale(1);
+  76% {
+    transform: translate(120px, 185px) scale(1);
     opacity: 1;
   }
-  86% {
-    transform: translate(315px, 205px);
-    opacity: 1;
-  }
-  90% {
-    transform: translate(315px, 205px) scale(0.9);
-    opacity: 1;
-  }
-  94% {
-    transform: translate(315px, 205px) scale(1);
+  88% {
+    transform: translate(260px, 185px);
     opacity: 1;
   }
   100% {
-    transform: translate(320px, 140px);
+    transform: translate(280px, 140px);
     opacity: 1;
   }
 }
@@ -294,9 +286,9 @@ body {
 }
 
 .animate-click-ripple-1 {
-  animation: clickRippleEffect 10s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 4.2s;
+  animation: clickRippleEffect 10s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 4.3s;
 }
 
 .animate-click-ripple-2 {
-  animation: clickRippleEffect 10s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 6.8s;
+  animation: clickRippleEffect 10s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 7.0s;
 }

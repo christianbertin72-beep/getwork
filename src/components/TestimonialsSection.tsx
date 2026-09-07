@@ -1,8 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { MaskedHeading } from './MaskedHeading';
 
-export const TestimonialsSection: React.FC = () => {
+interface TestimonialsSectionProps {
+  currentTime?: number;
+}
+
+export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ currentTime }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (currentTime !== undefined) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsInView(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [currentTime]);
+
+  // Timeline triggers:
+  // 26-31s: Continue through landing page -> Testimonials section
+  // 26.6s+: Eyebrow & headline reveal
+  // 27.5s+: Cards rise into view with 100ms stagger
+  const isEyebrowRevealed = currentTime !== undefined ? currentTime >= 26.4 : isInView;
+  const isHeadingRevealed = currentTime !== undefined ? currentTime >= 26.8 : isInView;
+  const isCardsRevealed = currentTime !== undefined ? currentTime >= 27.4 : isInView;
 
   const testimonials = [
     {
@@ -43,19 +70,38 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full py-24 md:py-32 px-5 sm:px-8 bg-[#080808] border-t border-white/[0.04]">
+    <section
+      ref={sectionRef}
+      className="relative w-full py-24 md:py-32 px-5 sm:px-8 bg-[#080808] border-t border-white/[0.04]"
+    >
       <div className="max-w-[1199px] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div className="text-left">
             {/* Charcoal Pill Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-white/[0.08] text-[13px] font-medium text-[#999999] mb-6">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-white/[0.08] text-[13px] font-medium text-[#999999] mb-6 transition-all duration-700"
+              style={{
+                opacity: isEyebrowRevealed ? 1 : 0,
+                transform: isEyebrowRevealed ? 'translateY(0)' : 'translateY(12px)',
+                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="text-white">Client stories</span>
             </div>
 
-            <h2 className="text-white text-[36px] sm:text-[52px] lg:text-[60px] font-medium leading-[0.96] tracking-[-2.5px] sm:tracking-[-3.1px] max-w-xl">
-              Proven by the teams that build the future.
-            </h2>
+            {/* Masked Heading Line-by-Line Reveal */}
+            <MaskedHeading
+              tag="h2"
+              lines={[
+                'Proven by the teams that',
+                'build the future.',
+              ]}
+              isRevealed={isHeadingRevealed}
+              delayPerLineMs={160}
+              startDelayMs={0}
+              className="text-white text-[36px] sm:text-[52px] lg:text-[60px] font-medium leading-[0.96] tracking-[-2.5px] sm:tracking-[-3.1px] max-w-xl"
+            />
           </div>
 
           {/* Circular Navigation Buttons */}
@@ -79,19 +125,29 @@ export const TestimonialsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Testimonials Grid on Framer Surface-1 */}
+        {/* Testimonials Grid on Framer Surface-1 with Staggered Slide & Scale */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
           {testimonials.map((t, idx) => {
             const isFeatured = idx === currentIndex;
+            const cardDelay = idx * 110;
             return (
               <div
                 key={t.id}
                 onClick={() => setCurrentIndex(idx)}
-                className={`rounded-[20px] p-7 sm:p-8 transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                className={`rounded-[20px] p-7 sm:p-8 transition-all duration-700 cursor-pointer flex flex-col justify-between ${
                   isFeatured
                     ? 'bg-[#1e1e1e] border border-white/[0.16] shadow-xl'
                     : 'bg-[#141414] border border-white/[0.08] hover:border-white/20'
                 }`}
+                style={{
+                  opacity: isCardsRevealed ? 1 : 0,
+                  transform: isCardsRevealed
+                    ? 'translateY(0px) scale(1)'
+                    : 'translateY(26px) scale(0.97)',
+                  transitionDelay: `${cardDelay}ms`,
+                  transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                  willChange: 'transform, opacity',
+                }}
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
