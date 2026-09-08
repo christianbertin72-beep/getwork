@@ -1,6 +1,11 @@
 import React from 'react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenDedicatedTeamsTerms?: () => void;
+  onOpenTopTalent?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenDedicatedTeamsTerms, onOpenTopTalent }) => {
   return (
     <footer className="w-full bg-[#080808] border-t border-white/[0.04] pt-16 pb-14 px-5 sm:px-8 text-left">
       <div className="max-w-[1199px] mx-auto">
@@ -30,9 +35,29 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-[14px] font-medium text-white tracking-[-0.14px] mb-4">Clients</h4>
             <ul className="space-y-2.5 text-[13.5px] text-[#999999]">
+              <li>
+                <button
+                  type="button"
+                  onClick={onOpenTopTalent}
+                  className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                >
+                  <span>Top 1% Vetted Talent</span>
+                  <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[#0099ff]/15 text-[#0099ff] border border-[#0099ff]/30">
+                    1.4%
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={onOpenDedicatedTeamsTerms}
+                  className="hover:text-white transition-colors cursor-pointer text-left"
+                >
+                  Dedicated Teams Terms
+                </button>
+              </li>
               <li><a href="#talent" className="hover:text-white transition-colors">Find Talent</a></li>
               <li><a href="#talent" className="hover:text-white transition-colors">Post a Project</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Enterprise Squads</a></li>
               <li><a href="#features" className="hover:text-white transition-colors">Escrow Security</a></li>
               <li><a href="#features" className="hover:text-white transition-colors">Success Stories</a></li>
             </ul>
@@ -44,7 +69,15 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-[13.5px] text-[#999999]">
               <li><a href="#work" className="hover:text-white transition-colors">Browse Contracts</a></li>
               <li><a href="#work" className="hover:text-white transition-colors">Global Payouts</a></li>
-              <li><a href="#work" className="hover:text-white transition-colors">Vetting Standards</a></li>
+              <li>
+                <button
+                  type="button"
+                  onClick={onOpenTopTalent}
+                  className="hover:text-white transition-colors cursor-pointer text-left"
+                >
+                  Vetting Standards
+                </button>
+              </li>
               <li><a href="#work" className="hover:text-white transition-colors">Skill Assessments</a></li>
               <li><a href="#work" className="hover:text-white transition-colors">Community Forum</a></li>
             </ul>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CompaniesStrip } from './components/CompaniesStrip';
@@ -8,16 +8,38 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { CtaBanner } from './components/CtaBanner';
 import { Footer } from './components/Footer';
 import { InteractiveModals, ModalState } from './components/InteractiveModals';
+import { PostJobModal } from './components/PostJobModal';
+import { AdminJobsDashboard } from './components/AdminJobsDashboard';
+import { AdminLoginModal } from './components/AdminLoginModal';
+import { DedicatedTeamsTermsModal } from './components/DedicatedTeamsTermsModal';
+import { TopTalentModal } from './components/TopTalentModal';
+import { getStoredAuthUser, logoutAdmin, checkAdminSession } from './lib/supabase';
+import { AuthUser } from './types/job';
 
 export default function App() {
   const [modalState, setModalState] = useState<ModalState>({ type: null });
+  const [isPostJobOpen, setIsPostJobOpen] = useState(false);
+  const [isTopTalentOpen, setIsTopTalentOpen] = useState(false);
+  const [isDedicatedTeamsTermsOpen, setIsDedicatedTeamsTermsOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => getStoredAuthUser());
+
+  useEffect(() => {
+    checkAdminSession().then((user) => {
+      if (user) {
+        setCurrentUser(user);
+      }
+    });
+  }, []);
 
   const handleOpenAuth = (mode: 'login' | 'signup') => {
     setModalState({ type: 'auth', data: { mode } });
   };
 
   const handleOpenHire = () => {
-    setModalState({ type: 'hire' });
+    // Open the primary Job Submission modal directly
+    setIsPostJobOpen(true);
   };
 
   const handleOpenWork = () => {
@@ -29,15 +51,16 @@ export default function App() {
   };
 
   const handleFeatureClick = (featureTitle: string) => {
-    setModalState({
-      type: 'hire',
-      data: { prefill: featureTitle },
-    });
+    if (featureTitle.toLowerCase().includes('talent')) {
+      setIsTopTalentOpen(true);
+    } else {
+      setIsPostJobOpen(true);
+    }
   };
 
   const handleStepClick = (stepNumber: number) => {
     if (stepNumber === 1 || stepNumber === 2) {
-      handleOpenHire();
+      setIsPostJobOpen(true);
     } else {
       handleOpenWork();
     }
@@ -45,6 +68,31 @@ export default function App() {
 
   const handleCloseModal = () => {
     setModalState({ type: null });
+  };
+
+  /**
+   * Strictly Guarded Admin Portal Entry Point:
+   * Users CANNOT access the admin portal without being authenticated as an admin.
+   */
+  const handleOpenAdmin = () => {
+    if (currentUser && currentUser.isAdmin) {
+      setIsAdminOpen(true);
+    } else {
+      // Not logged in -> Prompt authentication guard modal
+      setIsAdminLoginOpen(true);
+    }
+  };
+
+  const handleLoginSuccess = (user: AuthUser) => {
+    setCurrentUser(user);
+    setIsAdminLoginOpen(false);
+    setIsAdminOpen(true);
+  };
+
+  const handleAdminLogout = async () => {
+    await logoutAdmin();
+    setCurrentUser(null);
+    setIsAdminOpen(false);
   };
 
   return (
@@ -60,7 +108,16 @@ export default function App() {
       />
 
       {/* Navigation Bar */}
-      <Navbar onOpenAuth={handleOpenAuth} onOpenHire={handleOpenHire} />
+      <Navbar
+        onOpenAuth={handleOpenAuth}
+        onOpenHire={handleOpenHire}
+        onOpenPostJob={() => setIsPostJobOpen(true)}
+        onOpenTopTalent={() => setIsTopTalentOpen(true)}
+        onOpenDedicatedTeamsTerms={() => setIsDedicatedTeamsTermsOpen(true)}
+        onOpenAdmin={handleOpenAdmin}
+        currentUser={currentUser}
+        onLogout={handleAdminLogout}
+      />
 
       {/* Main Content Sections */}
       <main className="flex-1 flex flex-col">
@@ -88,10 +145,59 @@ export default function App() {
       </main>
 
       {/* 7. Footer */}
-      <Footer />
+      <Footer
+        onOpenDedicatedTeamsTerms={() => setIsDedicatedTeamsTermsOpen(true)}
+        onOpenTopTalent={() => setIsTopTalentOpen(true)}
+      />
 
       {/* Interactive Modals */}
-      <InteractiveModals modalState={modalState} onClose={handleCloseModal} />
+      <InteractiveModals
+        modalState={modalState}
+        onClose={handleCloseModal}
+        onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* Top 1% Vetted Talent Network & Vetting Standards Modal */}
+      <TopTalentModal
+        isOpen={isTopTalentOpen}
+        onClose={() => setIsTopTalentOpen(false)}
+        onPostJob={() => {
+          setIsTopTalentOpen(false);
+          setIsPostJobOpen(true);
+        }}
+      />
+
+      {/* Dedicated Teams Terms of Engagement Modal */}
+      <DedicatedTeamsTermsModal
+        isOpen={isDedicatedTeamsTermsOpen}
+        onClose={() => setIsDedicatedTeamsTermsOpen(false)}
+        onRequestSquad={() => {
+          setIsDedicatedTeamsTermsOpen(false);
+          setIsPostJobOpen(true);
+        }}
+      />
+
+      {/* Dedicated Job Submission Modal (Public Flow) */}
+      <PostJobModal
+        isOpen={isPostJobOpen}
+        onClose={() => setIsPostJobOpen(false)}
+      />
+
+      {/* Dedicated Admin Login Guard Modal */}
+      <AdminLoginModal
+        isOpen={isAdminLoginOpen}
+        onClose={() => setIsAdminLoginOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* Dedicated Admin Jobs Moderation Dashboard (Strictly Protected Flow) */}
+      <AdminJobsDashboard
+        isOpen={isAdminOpen && Boolean(currentUser?.isAdmin)}
+        onClose={() => setIsAdminOpen(false)}
+        currentUser={currentUser}
+        onLogout={handleAdminLogout}
+      />
     </div>
   );
 }
+

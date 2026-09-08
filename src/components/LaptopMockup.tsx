@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Code2,
   Megaphone,
@@ -24,18 +24,89 @@ export const LaptopMockup: React.FC<LaptopMockupProps> = ({
   onHireClick,
   onWorkClick,
 }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [realMouse, setRealMouse] = useState({
+    x: 0,
+    y: 0,
+    rotateX: 2,
+    rotateY: -16,
+  });
+
+  // Track the user's real mouse arrow pointer across the screen
+  useEffect(() => {
+    let rafId: number;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // Distance from center of screen to user's real mouse cursor
+      const diffX = e.clientX - centerX;
+      const diffY = e.clientY - centerY;
+
+      // Normalized coordinates within responsive range
+      const maxRange = 500;
+      const normX = Math.max(-1, Math.min(1, diffX / maxRange));
+      const normY = Math.max(-1, Math.min(1, diffY / maxRange));
+
+      // Move in the exact same direction as the real mouse pointer
+      targetX = normX * 30;
+      targetY = normY * 24;
+    };
+
+    const handleMouseLeave = () => {
+      targetX = 0;
+      targetY = 0;
+    };
+
+    const updateLoop = () => {
+      // Smooth interpolation for fluid responsive movement
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+
+      const normX = currentX / 30;
+      const normY = currentY / 24;
+      const rotY = -16 + normX * 6; // Tilts toward pointer direction, base -16deg receded behind headline
+      const rotX = 2 - normY * 5;   // Tilts vertically with pointer
+
+      setRealMouse({
+        x: Math.round(currentX * 100) / 100,
+        y: Math.round(currentY * 100) / 100,
+        rotateX: Math.round(rotX * 100) / 100,
+        rotateY: Math.round(rotY * 100) / 100,
+      });
+
+      rafId = requestAnimationFrame(updateLoop);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    rafId = requestAnimationFrame(updateLoop);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
   return (
     <div
       id="laptop-hero-mockup"
-      className="relative w-full max-w-[490px] xl:max-w-[530px] mx-auto select-none pointer-events-auto py-4"
+      className="relative w-full max-w-[410px] sm:max-w-[435px] xl:max-w-[460px] mx-auto lg:ml-auto lg:mr-0 select-none pointer-events-auto py-2 -translate-y-3 sm:-translate-y-5 lg:-translate-y-7 lg:-translate-x-6 xl:-translate-x-10"
     >
       {/* Soft electric blue backlight glow beneath laptop */}
-      <div className="absolute -bottom-10 inset-x-12 h-36 bg-[#0099ff]/20 filter blur-3xl rounded-full pointer-events-none z-0" />
+      <div className="absolute -bottom-8 inset-x-8 h-32 bg-[#0099ff]/18 filter blur-3xl rounded-full pointer-events-none z-0" />
 
       {/* ========================================================================= */}
       {/* 4 SKILL BOXES ON THE RIGHT OF THE LAPTOP WITH ARROWS FLOWING OUT OF LAPTOP */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex flex-col gap-2.5 absolute -right-48 xl:-right-54 top-5 z-40 w-44 xl:w-48">
+      <div className="hidden lg:flex flex-col gap-2 absolute -right-36 xl:-right-40 top-1 z-30 w-36 xl:w-40">
         {/* Card 1: Web Development */}
         <div
           onClick={() => onCategoryClick?.('Web Development')}
@@ -43,7 +114,7 @@ export const LaptopMockup: React.FC<LaptopMockupProps> = ({
         >
           {/* Arrow pointing OUT of the laptop toward the card */}
           <div className="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 flex items-center pointer-events-none pr-1 z-30">
-            <div className="w-6 xl:w-9 h-[1.5px] bg-gradient-to-r from-[#0099ff]/50 via-[#0099ff]/80 to-[#0099ff] group-hover:from-[#0099ff] group-hover:to-[#0099ff] transition-all duration-200" />
+            <div className="w-5 xl:w-7 h-[1.5px] bg-gradient-to-r from-[#0099ff]/50 via-[#0099ff]/80 to-[#0099ff] group-hover:from-[#0099ff] group-hover:to-[#0099ff] transition-all duration-200" />
             <svg
               className="w-4 h-4 text-[#0099ff] -ml-1.5 transition-colors duration-200 flex-none filter drop-shadow-[0_0_5px_rgba(0,153,255,0.85)]"
               viewBox="0 0 24 24"
@@ -189,20 +260,28 @@ export const LaptopMockup: React.FC<LaptopMockupProps> = ({
       {/* FLOATING JOBS BOARD & FEED WITH LIVE AUTONOMOUS MOUSE ARROW */}
       {/* ========================================================================= */}
       <div
-        className="relative w-full max-w-[490px] xl:max-w-[530px] mx-auto z-20"
+        className="relative w-full max-w-[410px] sm:max-w-[435px] xl:max-w-[460px] mx-auto lg:ml-auto lg:mr-0 z-20"
         style={{
           perspective: '1200px',
         }}
       >
         {/* Soft atmospheric electric blue backlight glow beneath jobs card */}
-        <div className="absolute -inset-2 bg-gradient-to-r from-[#0099ff]/25 via-blue-600/15 to-transparent rounded-[26px] blur-2xl opacity-70 pointer-events-none -z-10" />
-
-        {/* The Sleek Floating Jobs Card - 3D depth with left side tilted behind */}
         <div
-          className="w-full bg-[#0b0c10]/92 backdrop-blur-2xl rounded-[18px] border border-white/[0.12] shadow-[0_30px_70px_rgba(0,0,0,0.85),0_0_1px_rgba(255,255,255,0.15)] overflow-hidden flex flex-col relative text-left transition-transform duration-500 ease-out"
+          className="absolute -inset-2 bg-gradient-to-r from-[#0099ff]/25 via-blue-600/15 to-transparent rounded-[26px] blur-2xl opacity-70 pointer-events-none -z-10"
           style={{
-            transform: 'rotateY(-8deg) rotateX(2deg)',
+            transform: `translate3d(${realMouse.x}px, ${realMouse.y}px, 0px)`,
+            willChange: 'transform',
+          }}
+        />
+
+        {/* The Sleek Floating Jobs Card - 3D depth moving interactively in the same direction as the user's real mouse arrow */}
+        <div
+          ref={cardRef}
+          className="w-full bg-[#0b0c10]/92 backdrop-blur-2xl rounded-[18px] border border-white/[0.12] shadow-[0_30px_70px_rgba(0,0,0,0.85),0_0_1px_rgba(255,255,255,0.15)] overflow-hidden flex flex-col relative text-left"
+          style={{
+            transform: `translate3d(${realMouse.x}px, ${realMouse.y}px, -95px) rotateY(${realMouse.rotateY}deg) rotateX(${realMouse.rotateX}deg)`,
             transformStyle: 'preserve-3d',
+            willChange: 'transform',
           }}
         >
           {/* Subtle top edge specular highlight */}

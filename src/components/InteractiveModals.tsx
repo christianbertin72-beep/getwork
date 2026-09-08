@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, ArrowRight, ShieldCheck, Sparkles, Search, UserCheck } from 'lucide-react';
+import { X, CheckCircle2, ArrowRight, ShieldCheck, Sparkles, Search, UserCheck, AlertCircle } from 'lucide-react';
+import { AuthUser } from '../types/job';
+import { loginAdmin } from '../lib/supabase';
 
 export interface ModalState {
   type: 'hire' | 'work' | 'auth' | 'category' | 'feature' | null;
@@ -9,15 +11,19 @@ export interface ModalState {
 interface InteractiveModalsProps {
   modalState: ModalState;
   onClose: () => void;
+  onLoginSuccess?: (user: AuthUser) => void;
 }
 
-export const InteractiveModals: React.FC<InteractiveModalsProps> = ({ modalState, onClose }) => {
+export const InteractiveModals: React.FC<InteractiveModalsProps> = ({ modalState, onClose, onLoginSuccess }) => {
   const [authMode, setAuthMode] = useState<'login' | 'signup'>(
     modalState.data?.mode === 'login' ? 'login' : 'signup'
   );
   const [projectTitle, setProjectTitle] = useState('');
   const [projectBudget, setProjectBudget] = useState('$1,000 - $3,000');
   const [submitted, setSubmitted] = useState(false);
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authError, setAuthError] = useState<string | null>(null);
 
   if (!modalState.type) return null;
 
@@ -205,9 +211,25 @@ export const InteractiveModals: React.FC<InteractiveModalsProps> = ({ modalState
                 : 'Access your projects, milestones, and payments.'}
             </p>
 
+            {authError && (
+              <div className="mt-4 p-3 bg-rose-500/10 border border-rose-500/30 rounded-[10px] flex items-center gap-2 text-rose-300 text-[13px]">
+                <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                <span>{authError}</span>
+              </div>
+            )}
+
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                setAuthError(null);
+
+                const res = await loginAdmin(authEmail, authPassword);
+                if (!res.success || !res.user) {
+                  setAuthError(res.error || 'Invalid credentials. Please verify your email and password.');
+                  return;
+                }
+
+                onLoginSuccess?.(res.user);
                 onClose();
               }}
               className="mt-5 space-y-3.5"
@@ -218,6 +240,8 @@ export const InteractiveModals: React.FC<InteractiveModalsProps> = ({ modalState
                   type="email"
                   required
                   placeholder="you@company.com"
+                  value={authEmail}
+                  onChange={(e) => setAuthEmail(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-[#1e1e1e] border border-white/[0.08] rounded-[10px] text-[14px] text-white placeholder-[#666666] focus:outline-none focus:border-[#0099ff]/60 focus:ring-1 focus:ring-[#0099ff]/40"
                 />
               </div>
@@ -228,6 +252,8 @@ export const InteractiveModals: React.FC<InteractiveModalsProps> = ({ modalState
                   type="password"
                   required
                   placeholder="••••••••••••"
+                  value={authPassword}
+                  onChange={(e) => setAuthPassword(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-[#1e1e1e] border border-white/[0.08] rounded-[10px] text-[14px] text-white placeholder-[#666666] focus:outline-none focus:border-[#0099ff]/60 focus:ring-1 focus:ring-[#0099ff]/40"
                 />
               </div>
